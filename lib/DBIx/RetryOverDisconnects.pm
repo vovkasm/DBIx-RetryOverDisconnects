@@ -2,7 +2,7 @@ package DBIx::RetryOverDisconnects;
 use base 'DBI';
 use strict;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 our ($errstr, $err);
 use Exception::Class;
 use constant PRIV => 'private_DBIx-RetryOverDisconnects_data';
@@ -419,9 +419,11 @@ sub reconnect {
     $new_dbh->{PRIV()} = undef;
     $new_dbh->STORE('Active', 0);
 
+    $self->STORE('CachedKids', {});
     if ($sth) {
         my $new_sth = $self->prepare_cached($sth->{Statement});
         $sth->swap_inner_handle($new_sth, 1);
+        $sth->restore_params($new_sth);
         $new_sth->finish;
     }
     $self->STORE('CachedKids', {});
@@ -523,6 +525,25 @@ foreach my $func (qw/execute execute_array execute_for_fetch/) {
         }
         return $wa ? @retval : $retval;
     };
+}
+
+sub restore_params {
+    my $self = shift;
+    my $from = shift;
+    
+    my $types = $from->{ParamTypes} || {};
+    #Restore possible ParamArrays
+    my $param_arrays = $from->{ParamArrays} || {};
+    while (my($bind, $array) = each %$param_arrays) {
+        $self->bind_param_array($bind, $array, $types->{$bind} ? $types->{$bind} : ());
+    }
+
+    #Restore normal ph's values
+    my $param_values = $from->{ParamValues} || {};
+    my $i = 1;
+    foreach my $bind_name (sort {($a =~ /(\d+)/)[0] <=> ($b =~ /(\d+)/)[0]} keys %$param_values) {
+        $self->bind_param($i++, $param_values->{$bind_name}, $types->{$bind_name} ? $types->{$bind_name} : ());
+    }
 }
 
 =head1 OVERLOADED METHODS
