@@ -1,24 +1,19 @@
 ---
-name: DBIx-RetryOverDisconnects
-version: 0.02
+abstract: 'DBI wrapper that helps to deal with databases connection problems'
 author:
   - 'Pronin Oleg <syber@cpan.org>'
-abstract: DBI wrapper that helps to deal with databases connection problems
+distribution_type: module
+generated_by: 'Module::Install version 0.71'
 license: perl
-resources:
-  license: http://dev.perl.org/licenses/
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.3.html
+  version: 1.3
+name: DBIx-RetryOverDisconnects
+no_index:
+  directory:
+    - inc
+    - t
 requires:
   DBI: 1.44
   Exception::Class: 1.23
-provides:
-  DBIx::RetryOverDisconnects:
-    file: lib/DBIx/RetryOverDisconnects.pm
-    version: 0.02
-  DBIx::RetryOverDisconnects::db:
-    file: lib/DBIx/RetryOverDisconnects.pm
-  DBIx::RetryOverDisconnects::st:
-    file: lib/DBIx/RetryOverDisconnects.pm
-generated_by: Module::Build version 0.280801
-meta-spec:
-  url: http://module-build.sourceforge.net/META-spec-v1.2.html
-  version: 1.2
+version: 0.03

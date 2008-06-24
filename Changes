@@ -1,5 +1,8 @@
 Revision history for Perl extension DBIx::RetryOverDisconnects.
 
+0.03  Wed Jun 25 03:21:13 2008
+        - moved to Module::Install, 'beta' stamp remove.
+
 0.02  Tue Apr 01 15:27:05 2008
         - fixed serious bug with restoring $sth after disconnect.
           Previously $sth did not save its ParamValues, ParamArrays
@@ -7,4 +10,3 @@ Revision history for Perl extension DBIx::RetryOverDisconnects.
 
 0.01  Fri Oct 19 04:39:56 2007
 	- beta version
-

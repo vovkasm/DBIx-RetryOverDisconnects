@@ -2,7 +2,7 @@ package DBIx::RetryOverDisconnects;
 use base 'DBI';
 use strict;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 our ($errstr, $err);
 use Exception::Class;
 use constant PRIV => 'private_DBIx-RetryOverDisconnects_data';
@@ -561,10 +561,6 @@ execute, execute_array, execute_for_fetch
 
 Currently PostgreSQL, MySQL and SQLite are supported. In the nearest future
 DB2, MSSQL, Oracle and Sybase will be supported.
-
-=head1 CAVEATS
-
-This is a *beta* version. Please do not use in production.
 
 =head1 SEE ALSO
 
