@@ -1,8 +1,9 @@
 package DBIx::RetryOverDisconnects;
 use base 'DBI';
 use strict;
+use 5.006;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 our ($errstr, $err);
 use Exception::Class;
 use constant PRIV => 'private_DBIx-RetryOverDisconnects_data';
