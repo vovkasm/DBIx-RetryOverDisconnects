@@ -3,7 +3,7 @@ use base 'DBI';
 use strict;
 use 5.006;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 our ($errstr, $err);
 use Exception::Class;
 use constant PRIV => 'private_DBIx-RetryOverDisconnects_data';
@@ -171,10 +171,10 @@ sub connect {
 sub get_self_attrs {
     my ($this, $attrs) = @_;
     return {
-        retries     => (delete $attrs->{ReconnectRetries})  ||  5,
-        interval    => (delete $attrs->{ReconnectInterval}) ||  2,
-        timeout     => (delete $attrs->{ReconnectTimeout})  ||  5,
-        txn_retries => (delete $attrs->{TxnRetries})   ||  4,
+        retries     => exists $attrs->{ReconnectRetries} ? (delete $attrs->{ReconnectRetries}) : 5,
+        interval    => (delete $attrs->{ReconnectInterval}) || 1,
+        timeout     => (delete $attrs->{ReconnectTimeout}) || 5,
+        txn_retries => (delete $attrs->{TxnRetries}) || 4,
     };
 }
 
